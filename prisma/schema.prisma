@@ -16,7 +16,7 @@ enum Role {
   ADMIN @map("ADMIN")
 }
 
-model user {
+model User {
   id        String  @id @default(uuid())
   name      String?
   email     String  @unique(map: "user_email_key")
@@ -25,20 +25,21 @@ model user {
   avatar    String
 }
 
-model category {
-  id    String  @id @default(uuid())
-  name  String  @unique(map: "category_name_key")
-  image String
+model Category {
+  id      Int     @id
+  name    String  @unique(map: "category_name_key")
+  image   String
+  product Product[]
 }
 
-model product {
+model Product {
   id          String  @id @default(uuid())
   title       String  
   price       Int     @default(0)
   description String?
-  category    String 
-  images      String
-  categoryId  String
+  image       String
+  category    Category @relation(fields: [categoryId], references: [id])  
+  categoryId  Int
 
   @@index([categoryId], map: "product_categoryId_fkey")
 }

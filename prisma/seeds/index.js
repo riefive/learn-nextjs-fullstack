@@ -1,51 +1,70 @@
 const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcrypt');
+const categoryRaws = require('./dummy.category.json');
+const productRaws = require('./dummy.product.json');
+const userRaws = require('./dummy.user.json');
 
 const prisma = new PrismaClient();
 
-async function main() {
+async function initUser() {
     const users = await prisma.user.findMany();
-    if (users.length > 0) return;
-    const userCreates = await prisma.user.createMany({
-        data: [
-            {
-                email: 'john@mail.com',
-                password: 'changeme',
-                name: 'Jhon',
-                role: 'ADMIN',
-                avatar: 'https://picsum.photos/id/1/200/300',
-            },
-            {
-                email: 'maria@mail.com',
-                password: '12345',
-                name: 'Maria',
-                role: 'USER',
-                avatar: 'https://picsum.photos/id/1/200/300',
-            },
-            {
-                email: 'admin@mail.com',
-                password: 'admin123',
-                name: 'Admin',
-                role: 'USER',
-                avatar: 'https://picsum.photos/id/1/200/300',
-            },
-            {
-                email: 'manu@gmail.com',
-                password: 'manu123',
-                name: 'manu',
-                role: 'USER',
-                avatar: 'https://picsum.photos/id/1/200/300',
-            },
-            {
-                email: 'shashikunal@gmail.com',
-                password: 'shashi123',
-                name: 'shashi',
-                role: 'USER',
-                avatar: 'https://picsum.photos/id/1/200/300',
-            },
-        ],
-        skipDuplicates: true,
-    });
+    if (users.length > 0) return { count: users.length };
+    try {
+        const raws = userRaws;
+        const data = [];
+        for (const item of raws) {
+            item.password = bcrypt.hashSync(item.password, 10);
+            data.push(item);
+        }
+        const userCreates = await prisma.user.createMany({
+            data,
+            skipDuplicates: true,
+        });
+        return userCreates;
+    } catch (error) {
+        console.error(error);
+        return { count: 0 };
+    }
+}
+
+async function initCategory() {
+    const categories = await prisma.category.findMany();
+    if (categories.length > 0) return { count: categories.length };
+    try {
+        const raws = categoryRaws;
+        const categoryCreates = await prisma.category.createMany({
+            data: raws,
+            skipDuplicates: true,
+        });
+        return categoryCreates;
+    } catch (error) {
+        console.error(error);
+        return { count: 0 };
+    }
+}
+
+async function initProduct() {
+    const products = await prisma.product.findMany();
+    if (products.length > 0) return { count: products.length };
+    try {
+        const raws = productRaws;
+        const productCreates = await prisma.product.createMany({
+            data: raws,
+        });
+        return productCreates;
+    } catch (error) {
+        console.error(error);
+        return { count: 0 };
+    }
+}
+
+async function main() {
+    const userCreates = await initUser();
+    const categoryCreates = await initCategory();
+    const productCreates = await initProduct();
     console.log(userCreates);
+    console.log(categoryCreates);
+    console.log(productCreates);
 }
 
 main()
