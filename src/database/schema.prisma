@@ -27,7 +27,6 @@ model User {
 
 model Category {
   id        Int     @id
-  uniqueId  String  @default(uuid())
   name      String  @unique(map: "category_name_key")
   image     String
   product   Product[]
