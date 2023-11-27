@@ -1,8 +1,8 @@
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcrypt');
-const categoryRaws = require('./dummy.category.json');
-const productRaws = require('./dummy.product.json');
-const userRaws = require('./dummy.user.json');
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import categoryRaws from './dummy.category.json';
+import productRaws from './dummy.product.json';
+import userRaws from './dummy.user.json';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,7 @@ async function initUser() {
     if (users.length > 0) return { count: users.length };
     try {
         const raws = userRaws;
-        const data = [];
+        const data: any = [];
         for (const item of raws) {
             item.password = bcrypt.hashSync(item.password, 10);
             data.push(item);
@@ -31,7 +31,7 @@ async function initCategory() {
     const categories = await prisma.category.findMany();
     if (categories.length > 0) return { count: categories.length };
     try {
-        const raws = categoryRaws;
+        const raws: any = categoryRaws;
         const categoryCreates = await prisma.category.createMany({
             data: raws,
             skipDuplicates: true,
@@ -47,7 +47,7 @@ async function initProduct() {
     const products = await prisma.product.findMany();
     if (products.length > 0) return { count: products.length };
     try {
-        const raws = productRaws;
+        const raws: any = productRaws;
         const productCreates = await prisma.product.createMany({
             data: raws,
         });

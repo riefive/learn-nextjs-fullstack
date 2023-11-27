@@ -10,9 +10,9 @@
         "format": "prettier --check --ignore-path .gitignore .",
         "format:fix": "prettier --write --ignore-path .gitignore .",
         "format:lint": "npm run format:fix && npm run lint",
-        "prisma:generate": "npx prisma generate",
-        "prisma:migrate": "npx prisma migrate dev --name init",
-        "prisma:seed": "node ./prisma/seeds/index",
+        "prisma:generate": "npx prisma generate --schema ./database/schema.prisma",
+        "prisma:migrate": "npx prisma --schema ./database/schema.prisma migrate dev --name init",
+        "prisma:seed": "node ./src/database/seeds/index",
         "prisma:watch": "npx prisma studio"
     },
     "dependencies": {
@@ -23,6 +23,7 @@
         "react-dom": "^18"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",

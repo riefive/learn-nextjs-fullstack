@@ -26,10 +26,11 @@ model User {
 }
 
 model Category {
-  id      Int     @id
-  name    String  @unique(map: "category_name_key")
-  image   String
-  product Product[]
+  id        Int     @id
+  uniqueId  String  @default(uuid())
+  name      String  @unique(map: "category_name_key")
+  image     String
+  product   Product[]
 }
 
 model Product {
