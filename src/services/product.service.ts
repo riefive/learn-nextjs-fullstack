@@ -1,20 +1,20 @@
 import { PrismaClient } from '@prisma/client';
-import { CategoryType } from '@/types/category.type';
+import { ProductType } from '@/types/product.type';
 
 const prisma = new PrismaClient();
 
-export async function categoryGetAll(): Promise<CategoryType[] | any> {
+export async function productGetAll(): Promise<ProductType[] | any> {
     try {
-        const result = await prisma.category.findMany({});
+        const result = await prisma.product.findMany({});
         return result;
     } catch (error: any) {
         return { message: 'Failed to get data!!!', error: error.toString() };
     }
 }
 
-export async function categoryGetOne(id: number): Promise<CategoryType | any> {
+export async function productGetOne(id: string): Promise<ProductType | any> {
     try {
-        const result = await prisma.category.findUnique({
+        const result = await prisma.product.findUnique({
             where: { id },
         });
         return result;
@@ -23,11 +23,9 @@ export async function categoryGetOne(id: number): Promise<CategoryType | any> {
     }
 }
 
-export async function categoryCreate(
-    payloads: any
-): Promise<CategoryType | any> {
+export async function productCreate(payloads: any): Promise<ProductType | any> {
     try {
-        const result = await prisma.category.create({
+        const result = await prisma.product.create({
             data: payloads,
         });
         return result;
@@ -36,12 +34,12 @@ export async function categoryCreate(
     }
 }
 
-export async function categoryUpdate(
-    id: number,
+export async function userUpdate(
+    id: string,
     payloads: any
-): Promise<CategoryType | any> {
+): Promise<ProductType | any> {
     try {
-        const result = await prisma.category.update({
+        const result = await prisma.product.update({
             where: {
                 id,
             },
@@ -56,9 +54,9 @@ export async function categoryUpdate(
     }
 }
 
-export async function categoryRemove(id: number): Promise<any> {
+export async function productRemove(id: string): Promise<any> {
     try {
-        const result = await prisma.category.delete({
+        const result = await prisma.product.delete({
             where: {
                 id,
             },

@@ -34,7 +34,10 @@ export async function userCreate(payloads: any): Promise<UserType | any> {
     }
 }
 
-export async function userUpdate(id: string, payloads: any): Promise<UserType | any> {
+export async function userUpdate(
+    id: string,
+    payloads: any
+): Promise<UserType | any> {
     try {
         const result = await prisma.user.update({
             where: {
