@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 
 export async function productGetAll(): Promise<ProductType[] | any> {
     try {
-        const result = await prisma.product.findMany({});
+        const result = await prisma.product.findMany({
+            include: {
+                category: true,
+            },
+        });
         return result;
     } catch (error: any) {
         return { message: 'Failed to get data!!!', error: error.toString() };
