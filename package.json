@@ -10,9 +10,9 @@
         "format": "prettier --check --ignore-path .gitignore .",
         "format:fix": "prettier --write --ignore-path .gitignore .",
         "format:lint": "npm run format:fix && npm run lint",
-        "prisma:generate": "npx prisma generate --schema ./database/schema.prisma",
-        "prisma:migrate": "npx prisma --schema ./database/schema.prisma migrate dev --name init",
-        "prisma:seed": "node ./src/database/seeds/index",
+        "prisma:generate": "npx prisma generate --schema ./src/database/schema.prisma",
+        "prisma:migrate": "npx prisma migrate dev --name init --schema=./.prisma/client/schema.prisma",
+        "prisma:seed": "npx ts-node --compiler-options {\\\"module\\\":\\\"commonjs\\\"} ./src/database/seeds/index.ts",
         "prisma:watch": "npx prisma studio"
     },
     "dependencies": {
@@ -35,6 +35,7 @@
         "prettier": "^3.1.0",
         "prisma": "^5.6.0",
         "tailwindcss": "^3.3.0",
+        "ts-node": "^10.9.1",
         "typescript": "^5"
     }
 }
