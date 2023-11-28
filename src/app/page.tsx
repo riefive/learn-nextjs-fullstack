@@ -2,21 +2,25 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { Button, buttonVariants } from '@/components/ui/button';
 
 const ButtonAction = async () => {
     const session: any = (await getServerSession(authOptions)) || {};
     const user: any = session.user || {};
     if (!user.id) {
         return (
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded'>
+            <Button asChild>
                 <Link href='signin?callbackUrl=/admin'>Sign In</Link>
-            </button>
+            </Button>
         );
     } else {
         return (
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded'>
-                <Link href='signout'>Sign Out</Link>
-            </button>
+            <Link
+                href='signout'
+                className={buttonVariants({ variant: 'destructive' })}
+            >
+                Sign Out
+            </Link>
         );
     }
 };
