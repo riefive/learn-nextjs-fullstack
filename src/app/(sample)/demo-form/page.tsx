@@ -37,27 +37,32 @@ export default function DemoFormPage() {
     }
     return (
         <div className='flex flex-col max-w-[400px] mt-4 mx-auto p-2'>
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                <FormField
-                    control={form.control}
-                    name='username'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Username</FormLabel>
-                            <FormControl>
-                                <Input placeholder='shadcn' {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <Button type='submit' className='w-full'>Submit</Button>
-            </form>
-        </Form>
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className='space-y-8'
+                >
+                    <FormField
+                        control={form.control}
+                        name='username'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input placeholder='shadcn' {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is your public display name.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type='submit' className='w-full'>
+                        Submit
+                    </Button>
+                </form>
+            </Form>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import Provider from '@/components/provider';
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 export const fontSans = FontSans({
@@ -28,6 +29,7 @@ export default function RootLayout({
                 )}
             >
                 <Provider>{children}</Provider>
+                <Toaster />
             </body>
         </html>
     );
